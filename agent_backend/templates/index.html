@@ -7,7 +7,7 @@
     <style>
         span {
             color: #299d8f;
-            font-style:bold;
+            font-weight: 600;
         }   
     </style>
 </head>
@@ -15,7 +15,14 @@
     <div style="text-align: center; margin-top: 50px;">
         <img src="https://res.cloudinary.com/dlh5jsgam/image/upload/v1790178196/hydralakes-logo_pdfood.png" alt="HydraLakes Logo" style="width: 100px; height: auto;">
         <h1 style="color:#299d8f; font-family: Arial, Helvetica, sans-serif;">HydraLakes Blog Agent</h1>
-        <p style="font-family: Arial, Helvetica, sans-serif; color:rgb(89, 89, 89)">Creates blog posts, saves to <span>Company's Drive</span> and <span>notify</span> stakeholders via mails.</p>
+        <p style="font-family: Arial, Helvetica, sans-serif; color:rgb(89, 89, 89)">Creates blog posts, saves to <span>Company's Drive</span> and <span>notify stakeholders </span> via mails.</p>
+        <button style="background-color: #299d8f; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 8px;">Manage Agent</button>
     </div>
+
+    <script>
+        document.querySelector('button').addEventListener('click', function() {
+            window.location.href = '/login';
+        });
+    </script>
 </body>
 </html>

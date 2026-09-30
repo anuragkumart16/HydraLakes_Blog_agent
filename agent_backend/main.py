@@ -12,3 +12,5 @@ app = FastAPI()
 async def root(request:Request):
     return templates.TemplateResponse(request=request , name="index.html")
 
+
+
