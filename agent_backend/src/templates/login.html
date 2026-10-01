@@ -461,12 +461,16 @@
                 if (response.ok) {
                     if (data.access_token) {
                         localStorage.setItem('access_token', data.access_token);
+                        document.cookie = `access_token=${data.access_token}; path=/; max-age=86400; SameSite=Lax`;
+                    }
+                    if (data.user && data.user.username) {
+                        localStorage.setItem('user_name', data.user.username);
                     }
                     toast.className = 'toast-msg success';
                     toast.innerText = data.message || 'Login successful! Redirecting...';
                     toast.style.display = 'block';
                     setTimeout(() => {
-                        window.location.href = '/';
+                        window.location.href = '/dashboard';
                     }, 800);
                 } else {
                     toast.className = 'toast-msg error';

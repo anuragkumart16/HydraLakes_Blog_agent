@@ -104,6 +104,26 @@ async def login(credentials: UserLogin):
         )
     }
 
+def decode_access_token(token: str) -> dict:
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        return payload
+    except jwt.PyJWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired access token"
+        )
+
 @auth_router.post("/password-login")
 async def password_login(credentials: UserLogin):
     return await login(credentials)
+
+@auth_router.get("/me")
+async def get_current_user_profile(token: str | None = None):
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication token missing"
+        )
+    payload = decode_access_token(token)
+    return {"user": payload}
