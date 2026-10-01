@@ -316,6 +316,12 @@
             color: #065f46;
             border: 1px solid #a7f3d0;
         }
+
+        .toast-msg.error {
+            background-color: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
     </style>
 </head>
 <body>
@@ -425,13 +431,56 @@
             e.preventDefault();
             const email = document.getElementById('magicEmail').value;
             const toast = document.getElementById('toast');
+            toast.className = 'toast-msg success';
             toast.innerText = `Magic login link sent to ${email}! Check your inbox.`;
             toast.style.display = 'block';
         }
 
-        function handlePasswordLogin(e) {
+        async function handlePasswordLogin(e) {
             e.preventDefault();
-            window.location.href = '/';
+            const email = document.getElementById('pwdEmail').value;
+            const password = document.getElementById('pwdPassword').value;
+            const toast = document.getElementById('toast');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            toast.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.7';
+
+            try {
+                const response = await fetch('/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.access_token) {
+                        localStorage.setItem('access_token', data.access_token);
+                    }
+                    toast.className = 'toast-msg success';
+                    toast.innerText = data.message || 'Login successful! Redirecting...';
+                    toast.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 800);
+                } else {
+                    toast.className = 'toast-msg error';
+                    toast.innerText = data.detail || 'Login failed. Please check your credentials.';
+                    toast.style.display = 'block';
+                }
+            } catch (err) {
+                toast.className = 'toast-msg error';
+                toast.innerText = 'Network error. Please try again.';
+                toast.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }
         }
     </script>
 </body>
