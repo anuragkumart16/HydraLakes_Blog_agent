@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in to HydraLakes Blog Agent</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        /* Base Resets */
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f8fafc;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        /* Mobile responsive */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+                padding: 16px !important;
+            }
+            .content-box {
+                padding: 24px 20px !important;
+            }
+            .button-cta {
+                width: 100% !important;
+                text-align: center !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; color: #1e293b;">
+    <!-- Background Table Wrapper -->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; table-layout: fixed;">
+        <tr>
+            <td align="center" style="padding: 40px 10px;">
+                
+                <!-- Email Container -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="email-container" style="max-width: 560px; margin: 0 auto;">
+                    
+                    <!-- Header with Logo -->
+                    <tr>
+                        <td align="center" style="padding-bottom: 24px;">
+                            <a href="https://hydralakes.com" target="_blank" style="text-decoration: none;">
+                                <img src="https://res.cloudinary.com/dlh5jsgam/image/upload/v1790178196/hydralakes-logo_pdfood.png" alt="HydraLakes Logo" width="80" style="width: 80px; max-width: 80px; height: auto; display: block;">
+                            </a>
+                            <h2 style="margin: 12px 0 0 0; color: #299d8f; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">
+                                HydraLakes Blog Agent
+                            </h2>
+                        </td>
+                    </tr>
+
+                    <!-- Card Content Box -->
+                    <tr>
+                        <td class="content-box" style="background-color: #ffffff; border-radius: 16px; padding: 36px 32px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
+                            
+                            <!-- Greeting & Intro -->
+                            <h1 style="margin: 0 0 16px 0; color: #1e293b; font-size: 22px; font-weight: 700; text-align: left;">
+                                Sign in to your account
+                            </h1>
+                            <p style="margin: 0 0 24px 0; color: rgb(89, 89, 89); font-size: 15px; line-height: 1.6; text-align: left;">
+                                Hello {{ user_name or 'there' }},
+                            </p>
+                            <p style="margin: 0 0 28px 0; color: rgb(89, 89, 89); font-size: 15px; line-height: 1.6; text-align: left;">
+                                We received a request to access your <strong style="color: #299d8f;">HydraLakes Blog Agent</strong> account. Click the button below to sign in instantly without a password:
+                            </p>
+
+                            <!-- CTA Button -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 32px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ login_url or '#' }}" class="button-cta" target="_blank" style="background-color: #299d8f; color: #ffffff; display: inline-block; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 600; line-height: 48px; text-align: center; text-decoration: none; width: 100%; max-width: 320px; border-radius: 10px; box-shadow: 0 4px 12px rgba(41, 157, 143, 0.25);">
+                                            Log In to HydraLakes
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Backup Security Code -->
+                            <div style="background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 28px;">
+                                <p style="margin: 0 0 8px 0; color: rgb(89, 89, 89); font-size: 13px; font-weight: 500;">
+                                    Alternatively, enter this temporary verification code:
+                                </p>
+                                <span style="font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: 700; color: #299d8f; letter-spacing: 4px; display: inline-block;">
+                                    {{ otp_code or '849-204' }}
+                                </span>
+                            </div>
+
+                            <!-- Expiry Notice -->
+                            <p style="margin: 0 0 20px 0; color: #64748b; font-size: 13px; line-height: 1.5; text-align: left;">
+                                ⏱️ This link and verification code will expire in <strong>{{ expiration_minutes or '15' }} minutes</strong> for security reasons.
+                            </p>
+
+                            <!-- Security Warning -->
+                            <div style="border-top: 1px solid #f1f5f9; padding-top: 20px; text-align: left;">
+                                <p style="margin: 0; color: #94a3b8; font-size: 12px; line-height: 1.5;">
+                                    If you did not request this login link, you can safely ignore this email. Someone else may have typed your email address by mistake.
+                                </p>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="padding-top: 28px; padding-bottom: 12px;">
+                            <p style="margin: 0 0 8px 0; color: rgb(89, 89, 89); font-size: 12px;">
+                                <strong>HydraLakes Blog Agent</strong> — Automated Content Creation & Publishing
+                            </p>
+                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">
+                                &copy; 2026 HydraLakes. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- End Email Container -->
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

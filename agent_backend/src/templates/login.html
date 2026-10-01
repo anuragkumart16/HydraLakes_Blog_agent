@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HydraLakes Blog Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #299d8f;
+            --brand-primary-hover: #218378;
+            --brand-primary-light: rgba(41, 157, 143, 0.12);
+            --brand-primary-glow: rgba(41, 157, 143, 0.25);
+            --text-heading: #1e293b;
+            --text-body: rgb(89, 89, 89);
+            --text-muted: #94a3b8;
+            --bg-page: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --input-bg: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(41, 157, 143, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(41, 157, 143, 0.06) 0%, transparent 40%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 0 1px 1px rgba(0, 0, 0, 0.04);
+            padding: 40px 36px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--brand-primary), #36d1dc);
+        }
+
+        .logo-wrapper {
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-wrapper img {
+            width: 85px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .brand-title {
+            color: var(--brand-primary);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            color: var(--text-body);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .brand-subtitle span {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-body);
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--brand-primary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Form Styles */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            font-size: 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--input-bg);
+            color: var(--text-heading);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--brand-primary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px var(--brand-primary-glow);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-top: -4px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-body);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: var(--brand-primary);
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .forgot-link {
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+            color: var(--brand-primary-hover);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            border: none;
+            padding: 13px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px var(--brand-primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--brand-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(41, 157, 143, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        .social-btn {
+            width: 100%;
+            background: #ffffff;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-heading);
+            padding: 11px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--text-body);
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--brand-primary);
+        }
+
+        /* Message toast / feedback */
+        .toast-msg {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .toast-msg.success {
+            background-color: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- Logo & Brand Header -->
+        <a href="/" class="logo-wrapper" title="Go to Homepage">
+            <img src="https://res.cloudinary.com/dlh5jsgam/image/upload/v1790178196/hydralakes-logo_pdfood.png" alt="HydraLakes Logo">
+        </a>
+        <h1 class="brand-title">HydraLakes Blog Agent</h1>
+        <p class="brand-subtitle">
+            Creates blog posts, saves to <span>Company's Drive</span> and <span>notifies stakeholders</span> via email.
+        </p>
+
+        <!-- Login Method Tabs -->
+        <div class="auth-tabs">
+            <button class="tab-btn active" onclick="switchTab('magic-link')">Magic Link</button>
+            <button class="tab-btn" onclick="switchTab('password')">Password</button>
+        </div>
+
+        <div id="toast" class="toast-msg success">
+            Magic link sent! Check your inbox for the login link.
+        </div>
+
+        <!-- Magic Link Form (Default) -->
+        <form id="magicLoginForm" class="auth-form" onsubmit="handleMagicLink(event)">
+            <div class="form-group">
+                <label class="form-label" for="magicEmail">Work Email Address</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <input type="email" id="magicEmail" class="form-input" placeholder="name@company.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span>Send Magic Link</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </form>
+
+        <!-- Password Form (Hidden initially) -->
+        <form id="passwordLoginForm" class="auth-form" style="display: none;" onsubmit="handlePasswordLogin(event)">
+            <div class="form-group">
+                <label class="form-label" for="pwdEmail">Email Address</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                    </svg>
+                    <input type="email" id="pwdEmail" class="form-input" placeholder="name@company.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="pwdPassword">Password</label>
+                <div class="input-wrapper">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <input type="password" id="pwdPassword" class="form-input" placeholder="••••••••" required autocomplete="current-password">
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" checked> Remember me
+                </label>
+                <a href="#" class="forgot-link" onclick="alert('Password reset link sent to your registered email.')">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span>Sign In</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+            </button>
+        </form>
+
+
+        <div>
+            <a href="/" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const magicForm = document.getElementById('magicLoginForm');
+            const pwdForm = document.getElementById('passwordLoginForm');
+            const toast = document.getElementById('toast');
+
+            toast.style.display = 'none';
+
+            if (tab === 'magic-link') {
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+                magicForm.style.display = 'flex';
+                pwdForm.style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                tabs[0].classList.remove('active');
+                pwdForm.style.display = 'flex';
+                magicForm.style.display = 'none';
+            }
+        }
+
+        function handleMagicLink(e) {
+            e.preventDefault();
+            const email = document.getElementById('magicEmail').value;
+            const toast = document.getElementById('toast');
+            toast.innerText = `Magic login link sent to ${email}! Check your inbox.`;
+            toast.style.display = 'block';
+        }
+
+        function handlePasswordLogin(e) {
+            e.preventDefault();
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
